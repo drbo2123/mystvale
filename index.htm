@@ -1,263 +1,33 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="cs">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mystvale • Druidický Minecraft server</title>
-  <meta name="description" content="Mystvale je komunitný Minecraft server s druidickou atmosférou. Pridaj sa: play.mystvale.cz" />
-  <meta property="og:title" content="Mystvale • Druidický Minecraft server" />
-  <meta property="og:description" content="Pridaj sa: play.mystvale.cz" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="/banner.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Uncial+Antiqua&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg-deep:#0b1d16;
-      --bg-deeper:#07140f;
-      --ink:#e8f3eb;
-      --muted:#a7c2b2;
-      --accent:#9adf6b;
-      --accent-2:#c0a36e;
-      --card:#0f241c;
-      --edge:#1b3a2d;
-      --ok:#9adf6b; --warn:#f2c14e; --bad:#ef6b6b;
-      --shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:radial-gradient(1200px 600px at 70% -10%, #13432f, transparent),
-                 radial-gradient(900px 500px at 10% 10%, #143928, transparent),
-                 linear-gradient(180deg, var(--bg-deep), var(--bg-deeper));
-      color:var(--ink); font-family: 'Lora', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
-      line-height:1.6;
-    }
-    .wrap{max-width:1100px; margin-inline:auto; padding:24px}
-    header{position:sticky; top:0; z-index:30; backdrop-filter: blur(6px);}
-    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-radius:calc(var(--radius) - 6px); background:rgba(11,29,22,.35); border:1px solid rgba(154,223,107,.12); box-shadow:var(--shadow)}
-    .brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink)}
-    .logo{width:36px; height:36px; border-radius:10px; background:conic-gradient(from 0deg, #1f5b41, #214f3d);
-          border:1px solid var(--edge); box-shadow: inset 0 0 30px #2f7a55, 0 0 20px rgba(154,223,107,.15); position:relative}
-    .logo::after{content:""; position:absolute; inset:5px; border-radius:8px; border:1px solid rgba(255,255,255,.08)}
-    .brand-title{font-family:'Uncial Antiqua', serif; font-size:20px; letter-spacing:.5px}
-    .nav a.btn{padding:10px 14px; border-radius:12px; background:linear-gradient(180deg, #204b37, #18392b);
-      color:var(--ink); text-decoration:none; border:1px solid var(--edge); box-shadow:var(--shadow)}
-
-    /* hero */
-    .hero{position:relative; margin-top:24px; border:1px solid var(--edge); background:linear-gradient(180deg, rgba(13,30,23,.7), rgba(7,20,15,.8));
-      border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow)}
-    .hero-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:24px; padding:48px;}
-    @media (max-width: 900px){ .hero-grid{grid-template-columns:1fr; padding:28px}}
-    h1.title{margin:0; font-size: clamp(34px, 4.2vw, 54px); line-height:1.1; font-family:'Uncial Antiqua', serif;}
-    .subtitle{color:var(--muted); margin-top:10px}
-
-    .ip-card{background:linear-gradient(180deg, #0d231a, #0b1d16); border:1px solid var(--edge); border-radius:16px; padding:18px; box-shadow:var(--shadow)}
-    .ip-row{display:flex; gap:10px;}
-    .ip{flex:1; background:#0b211a; border:1px dashed #284b3a; padding:12px 14px; border-radius:12px; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:15px}
-    .btn{cursor:pointer; user-select:none; border-radius:12px; border:1px solid var(--edge); padding:12px 14px; background:linear-gradient(180deg, #214f3d, #1a3f31); color:var(--ink); box-shadow:var(--shadow)}
-    .btn:active{transform:translateY(1px)}
-    .muted{color:var(--muted); font-size:14px}
-
-    /* status */
-    .status{display:flex; align-items:center; gap:10px; margin-top:10px; font-size:15px}
-    .dot{width:10px; height:10px; border-radius:50%; background:var(--warn); box-shadow:0 0 12px currentColor}
-    .dot.ok{background:var(--ok)}
-    .dot.bad{background:var(--bad)}
-
-    /* features */
-    .section{margin-top:42px}
-    .h2{font-family:'Uncial Antiqua', serif; font-size: clamp(22px, 3.2vw, 34px); margin:0 0 14px}
-    .grid{display:grid; gap:18px; grid-template-columns: repeat(3, 1fr)}
-    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
-    .card{background:linear-gradient(180deg, #0e231a, #0a1b15); border:1px solid var(--edge); border-radius:16px; padding:18px; box-shadow:var(--shadow)}
-    .card h3{margin:8px 0 8px; font-size:19px}
-    .card p{margin:0; color:var(--muted)}
-
-    /* rules */
-    ol.rules{margin:0; padding-left:18px}
-    ol.rules li{margin:6px 0; color:var(--muted)}
-
-    /* footer */
-    footer{margin:54px 0 20px; color:var(--muted); text-align:center}
-
-    /* druid ornaments */
-    .orn{position:absolute; inset:0; pointer-events:none}
-    .orn svg{position:absolute; opacity:.18; filter: drop-shadow(0 2px 0 rgba(0,0,0,.4))}
-    .orn .top{top:-40px; right:-20px}
-    .orn .bot{bottom:-24px; left:-10px}
-
-    /* fireflies */
-    .fireflies{position:absolute; inset:0; overflow:hidden; pointer-events:none}
-    .fireflies span{position:absolute; width:6px; height:6px; background:radial-gradient(circle, #dfffb1 0%, rgba(255,255,255,0) 70%); border-radius:50%; filter:blur(.2px);
-      animation: drift var(--t,12s) linear infinite; opacity:.8}
-    @keyframes drift{
-      from{ transform: translate3d(var(--x, 0), 100vh, 0) scale(.9)}
-      to  { transform: translate3d(calc(var(--x, 0) + var(--dx, 0px)), -10vh, 0) scale(1.05)}
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mystvale • Domů</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="wrap">
-    <nav class="nav">
-      <a class="brand" href="#">
-        <div class="logo" aria-hidden="true"></div>
-        <span class="brand-title">Mystvale</span>
-      </a>
-      <div style="display:flex; gap:10px; align-items:center">
-        <a class="btn" href="#pripojenie">Pripojenie</a>
-        <a class="btn" href="#pravidla">Pravidlá</a>
-        <a class="btn" href="#svet">Svet</a>
-      </div>
-    </nav>
-  </header>
+<header>
+<nav>
+<a href="index.html">Domů</a>
+<a href="svet.html">Svět</a>
+<a href="pravidla.html">Pravidla</a>
+<a href="podpora.html">Podpora</a>
+</nav>
+</header>
 
-  <main class="wrap">
-    <section class="hero" aria-label="Úvod">
-      <div class="orn">
-        <svg class="top" width="220" height="220" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M20 120C70 60 120 40 180 20" stroke="#9adf6b" stroke-width="2"/>
-          <path d="M10 150C70 110 130 80 190 70" stroke="#c0a36e" stroke-width="2"/>
-        </svg>
-        <svg class="bot" width="220" height="220" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="60" cy="140" r="48" stroke="#9adf6b" stroke-width="2"/>
-          <circle cx="140" cy="60" r="38" stroke="#c0a36e" stroke-width="2"/>
-        </svg>
-      </div>
-      <div class="fireflies" aria-hidden="true"></div>
-      <div class="hero-grid">
-        <div>
-          <h1 class="title">Druidický svet <span style="color:var(--accent-2)">Mystvale</span></h1>
-          <p class="subtitle">Komunitný Minecraft server, kde sa les šepká, kamene si pamätajú a hráči stavajú legendy. Vstúp s rešpektom k prírode a s chuťou na dobrodružstvo.</p>
 
-          <div class="ip-card" id="pripojenie">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px">
-              <strong>Pripojenie</strong>
-              <small class="muted">Java & Bedrock</small>
-            </div>
-            <div class="ip-row">
-              <input id="ip" class="ip" value="play.mystvale.cz" aria-label="IP adresa servera" readonly />
-              <button class="btn" id="copy">Skopírovať IP</button>
-            </div>
-            <div class="status" id="status">
-              <span class="dot" id="dot"></span>
-              <span id="status-text" class="muted">Kontrolujem stav servera…</span>
-            </div>
-          </div>
-        </div>
-        <aside>
-          <div class="card">
-            <h3>Čo ťa čaká</h3>
-            <p>✔ Prepracovaný survival s ekonomikou</p>
-            <p>✔ Eventy pod posvätnými dubmi</p>
-            <p>✔ Ochrana regiónov a férové PVP</p>
-            <p>✔ Ručne tvorené questy a relicty</p>
-          </div>
-          <div class="card" style="margin-top:12px">
-            <h3>Komunita</h3>
-            <p>Pridaj sa na Discord a nájdi partiu do raidu.</p>
-            <a class="btn" href="#" aria-label="Discord odkaz">Discord</a>
-          </div>
-        </aside>
-      </div>
-    </section>
+<main>
+<section class="hero">
+<h1>Druidský svět Mystvale</h1>
+<p>Komunitní Minecraft server, kde les šeptá a kameny si pamatují. Připoj se: <strong>play.mystvale.cz</strong></p>
+</section>
+</main>
 
-    <section class="section" id="svet">
-      <h2 class="h2">Duch lesa</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Kruh druidov</h3>
-          <p>Vyvážená hra s dôrazom na spoluprácu. Vážime si tvorivosť, nie toxické správanie.</p>
-        </div>
-        <div class="card">
-          <h3>Sväté háje</h3>
-          <p>Chránené oblasti pre staviteľov a komunitné projekty. Požiadaj o pozemok, vybuduj svätyňu.</p>
-        </div>
-        <div class="card">
-          <h3>Prastará mágia</h3>
-          <p>Vlastné eventy, sezónne výzvy a zberateľské predmety s príbehom.</p>
-        </div>
-      </div>
-    </section>
 
-    <section class="section" id="pravidla">
-      <h2 class="h2">Pravidlá kruhu</h2>
-      <div class="card">
-        <ol class="rules">
-          <li>Žiadny griefing, žiadne hacky. Ži a nechaj žiť.</li>
-          <li>Rešpektuj hráčov aj prírodu mapy. Nič nenechávaj rozbité.</li>
-          <li>PVP iba so súhlasom alebo v určených zónach.</li>
-          <li>Admin má posledné slovo. Bez drámy.</li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2 class="h2">Podpora servera</h2>
-      <div class="card">
-        <p>Chceš podporiť vývoj a hostovanie? Získaj kozmetiku a malé výhody, nie pay‑to‑win hlúposti.</p>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px">
-          <a class="btn" href="#">Obchod</a>
-          <a class="btn" href="#">Hlasuj</a>
-          <a class="btn" href="#">Mapa</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>© <span id="year"></span> Mystvale • Sila lesa bdie nad tebou.</p>
-  </footer>
-
-  <script>
-    // fireflies populate
-    const ff = document.querySelector('.fireflies');
-    for(let i=0;i<24;i++){
-      const s=document.createElement('span');
-      const x = Math.random()*100;
-      const dx = (Math.random()*.8 + .2) * (Math.random() < .5 ? -1 : 1) * 120;
-      s.style.left = x + 'vw';
-      s.style.setProperty('--x', x + 'vw');
-      s.style.setProperty('--dx', dx + 'px');
-      s.style.setProperty('--t', (10 + Math.random()*10) + 's');
-      s.style.animationDelay = (-Math.random()*12) + 's';
-      ff.appendChild(s);
-    }
-
-    // copy IP
-    const ip = document.getElementById('ip');
-    const btn = document.getElementById('copy');
-    btn.addEventListener('click', async () => {
-      try{
-        await navigator.clipboard.writeText(ip.value);
-        btn.textContent = 'Skopírované';
-        setTimeout(()=>btn.textContent='Skopírovať IP', 1400);
-      }catch(e){
-        ip.select(); document.execCommand('copy');
-      }
-    });
-
-    // live status (graceful fallback)
-    const dot = document.getElementById('dot');
-    const statusText = document.getElementById('status-text');
-    const host = 'play.mystvale.cz';
-    fetch(`https://api.mcsrvstat.us/2/${host}`).then(r=>r.json()).then(data=>{
-      if(data && data.online){
-        dot.classList.add('ok');
-        statusText.textContent = `Online • ${data.players?.online ?? 0} hráčov`;
-      }else{
-        dot.classList.add('bad');
-        statusText.textContent = 'Offline alebo nedostupné';
-      }
-    }).catch(()=>{
-      statusText.textContent = 'Nedokážem zistiť stav (API)';
-    });
-
-    // year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+<footer>
+<p>© <span id="year"></span> Mystvale</p>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>
-
