@@ -1,0 +1,6 @@
+body{margin:0; background:#0b1d16; color:#e8f3eb; font-family:'Lora',serif;}
+header{background:#10271e; padding:12px; text-align:center;}
+nav a{color:#e8f3eb; margin:0 10px; text-decoration:none;}
+nav a.active{text-decoration:underline; color:#9adf6b;}
+.hero{text-align:center; padding:80px 20px;}
+footer{text-align:center; padding:20px; color:#a7c2b2;}
